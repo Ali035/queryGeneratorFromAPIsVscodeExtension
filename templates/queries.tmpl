@@ -1,0 +1,54 @@
+import { useQuery } from "react-query";
+import {
+  create${featureName},
+  get${featureName},
+  delete${featureName},
+  update${featureName},
+  get${pluralFeatureName}Statistics,
+  get${pluralFeatureName}List,
+} from "./api";
+import { I${featureName}Data, I${pluralFeatureName}ListParams } from "./type";
+import useFormMutation from "hooks/useFormMutation";
+
+export const useCreate${featureName} = () => {
+  const mutationResult = useFormMutation(create${featureName}, []);
+  return mutationResult;
+};
+
+export const useUpdate${featureName} = (id: number) => {
+  const mutationResult = useFormMutation(
+    (data: I${featureName}Data) => update${featureName}(data, id),
+    [[get${featureName}.name, id]]
+  );
+  return mutationResult;
+};
+
+export const use${featureName} = (id: string | undefined) => {
+  const queryResult = useQuery(
+    [get${featureName}.name, id],
+    () => get${featureName}(Number(id)),
+    {
+      cacheTime: Infinity,
+      staleTime: Infinity,
+      enabled: !!id,
+    }
+  );
+  return queryResult;
+};
+
+export const use${pluralFeatureName}Statistics = () => {
+  const queryResult = useQuery(get${pluralFeatureName}Statistics.name, get${pluralFeatureName}Statistics);
+  return queryResult;
+};
+
+export function use${pluralFeatureName}List(params: I${pluralFeatureName}ListParams) {
+  const queryResult = useQuery([get${pluralFeatureName}List.name, { ...params }], () =>
+    get${pluralFeatureName}List(params)
+  );
+  return queryResult;
+}
+
+export const useDelete${featureName} = () => {
+  throw new Error("Implement useDelete${featureName} hook");
+};
+

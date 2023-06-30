@@ -1,7 +1,9 @@
 {
   "name": "api-generator",
   "displayName": "API generator",
-  "description": "fill outlater",
+  "description": "This extension will generate you api.ts, its type as type.ts, queries corresponding with APIs as queries.ts and index.ts to export all of them.",
+  "author": "Ali Pourpanah",
+  "publisher": "AliPourpanah",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.79.0"
@@ -12,10 +14,18 @@
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "api-generator.createFiles",
+          "when": "explorerResourceIsFolder"
+        }
+      ]
+    },
     "commands": [
       {
-        "command": "api-generator.helloWorld",
-        "title": "Hello World"
+        "command": "api-generator.createFiles",
+        "title": "Generate Apis & Queries"
       }
     ]
   },

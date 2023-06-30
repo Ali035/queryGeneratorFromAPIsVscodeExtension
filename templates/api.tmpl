@@ -1,0 +1,43 @@
+import apiCaller, { IResponse } from "api";
+import {
+  I${featureName}Data,
+  I${featureName}Response,
+  I${pluralFeatureName}ListParams,
+  I${pluralFeatureName}ListResponse,
+} from "./type";
+import { IPaginationTableList } from "api/types/paginationType";
+import { IStatistics } from "api/types/statisticsTypes";
+
+const baseURL = ""; //TODO: write the base url
+
+export function create${featureName}(data: I${featureName}Data): Promise<IResponse<null>> {
+  return apiCaller.post(`${baseURL}`, data); //TODO: check url
+}
+
+export function update${featureName}(
+  data: I${featureName}Data,
+  id: number
+): Promise<IResponse<null>> {
+  return apiCaller.put(`${baseURL}/${id}`, data);//TODO: check url
+}
+
+export function get${pluralFeatureName}List(
+  params: I${pluralFeatureName}ListParams
+): Promise<IResponse<IPaginationTableList<I${pluralFeatureName}ListResponse>>> {
+  return apiCaller.get(`${baseURL}`, { params: params });//TODO: check url
+}
+
+export function get${featureName}(
+  id: number
+): Promise<IResponse<I${featureName}Response>> {
+  return apiCaller.get(`${baseURL}/${id}`);//TODO: check url
+}
+
+export function delete${featureName}(id: number): Promise<IResponse<null>> {
+  return apiCaller.delete(`${baseURL}/${id}`);//TODO: check url
+}
+
+export function get${pluralFeatureName}Statistics(): Promise<IResponse<IStatistics>> {
+  return apiCaller.get(`${baseURL}/statistics`);//TODO: check url
+}
+
