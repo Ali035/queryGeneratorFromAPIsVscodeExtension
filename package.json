@@ -5,20 +5,26 @@
   "author": "Ali Pourpanah",
   "publisher": "AliPourpanah",
   "version": "0.0.1",
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.79.0"
   },
   "categories": [
-    "Other"
+    "Snippets",
+    "Linters"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:typescript"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "menus": {
       "explorer/context": [
         {
           "command": "api-generator.createFiles",
-          "when": "explorerResourceIsFolder"
+          "when": "explorerResourceIsFolder",
+          "group": "navigation@-1"
         }
       ]
     },
