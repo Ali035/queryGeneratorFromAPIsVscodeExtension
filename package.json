@@ -4,7 +4,7 @@
   "description": "This extension will generate you api.ts, its type as type.ts, queries corresponding with APIs as queries.ts and index.ts to export all of them. Also this can generate needed files to refactoring your form. such as IForm.ts, formikHandler.ts, FormFields.ts and form.ts",
   "author": "Ali Pourpanah",
   "publisher": "AliPourpanah",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "icon": "logo.png",
   "engines": {
     "vscode": "^1.79.0"

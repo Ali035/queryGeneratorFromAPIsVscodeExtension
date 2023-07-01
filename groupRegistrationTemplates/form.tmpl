@@ -49,7 +49,7 @@ export default function MedicalDeviceForm() {
       {(pageType) => (
         <>
           {!!id ? (
-            <Loader isLoading={dataLoading} isError={isError}>
+            <Loader isLoading={dataIsLoading} isError={isError}>
               <${featureName}FormikHandler
                 pageType={pageType}
                 initialValues={loadedValues}
@@ -68,7 +68,7 @@ export default function MedicalDeviceForm() {
                 />
               </div>
               {tab === "1" ? (
-                <Loader isLoading={dataLoading} isError={isError}>
+                <Loader isLoading={dataIsLoading} isError={isError}>
                   <${featureName}FormikHandler
                     pageType={pageType}
                     initialValues={loadedValues}

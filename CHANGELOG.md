@@ -15,3 +15,7 @@ Check [Keep a Changelog](https://keepachangelog.com/) for recommendations on how
 ## [1.1.1]
 
 - Fixing file extension bug.
+
+## [1.1.2]
+
+- Fixing formFields file importing bug and fixing isDataIsLoading state of `Loader` component.
