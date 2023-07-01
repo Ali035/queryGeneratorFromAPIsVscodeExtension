@@ -87,9 +87,7 @@ function openTemplateAndSaveNewFile(
   folderPath: string
 ) {
   const templateFileName = filename + ".tmpl";
-  const extension = vscode.extensions.getExtension(
-    "AliPourpanah.api-generator"
-  );
+  const extension = vscode.extensions.getExtension("AliPourpanah.api-scaffold");
   if (!extension) {
     vscode.window.showErrorMessage("Unable to found extension");
     return;

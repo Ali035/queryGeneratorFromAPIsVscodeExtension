@@ -1,6 +1,6 @@
 {
-  "name": "api-generator",
-  "displayName": "API generator",
+  "name": "api-scaffold",
+  "displayName": "API scaffold",
   "description": "This extension will generate you api.ts, its type as type.ts, queries corresponding with APIs as queries.ts and index.ts to export all of them.",
   "author": "Ali Pourpanah",
   "publisher": "AliPourpanah",
