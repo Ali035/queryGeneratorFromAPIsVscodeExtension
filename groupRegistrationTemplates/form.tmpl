@@ -1,0 +1,87 @@
+import Page from "components/layout/page";
+import { useState } from "react";
+import Tabs, { TabObject } from "components/core/tabs";
+import { Group${pluralFeatureName}FormikHandler } from "./groupRegistration/IForm";
+import Loader from "components/common/loader";
+import { isDataIsLoading } from "utils/pages";
+import usePage from "hooks/usePage";
+import useMapFormValues from "hooks/useMapFormValues";
+import { initialValues, ${featureName}FormikHandler, IDropdownValues } from "./registration/IForm";
+import { use${featureName} } from "features/${folderName}";
+
+export default function MedicalDeviceForm() {
+  // get the 'id' and 'isViewingProfile' from the url.
+  const { id, isViewingProfile } = usePage();
+
+  //fetching the ${featureName} data
+  const { data, isError } = use${featureName}(id);
+
+  const TAB_ITEMS: TabObject[] = [
+    { id: "1", title: "Individual" },
+    { id: "2", title: "Group" },
+  ];
+  const [tab, setTab] = useState(TAB_ITEMS[0].id);
+
+  const loadedValues = useMapFormValues(initialValues, data, (dataObject) => ({
+    //* In mapping initial form values do not assign dropdown value's with fetched data.
+    //* Instead, assign it to EMPTY_OPTION and pass fetched id or name separately to formikHandler props.
+    /*    map your initial values in here      */
+
+  }));
+
+  // check if you are not in create mode and the data is loaded and mapped completely.
+  const dataIsLoading = isDataIsLoading(id, loadedValues, initialValues);
+
+  // assign all your dropdowns key or values with fetched data.
+  const dataObject = data?.data.data;
+  const dropdownValues: IDropdownValues = {
+
+  };
+  return (
+    <Page
+      backTo="pop"
+      title="Register new Medical Device"
+      editingTitle="Edit $name Medical Device"
+      viewProfileTitle="View Profile of $name Medical Device"
+      type={isViewingProfile ? "edit-inner" : "inner"}
+      name={dataObject.}
+    >
+      {(pageType) => (
+        <>
+          {!!id ? (
+            <Loader isLoading={dataLoading} isError={isError}>
+              <${featureName}FormikHandler
+                pageType={pageType}
+                initialValues={loadedValues}
+                {...dropdownValues}
+              />
+            </Loader>
+          ) : (
+            <>
+              <div className="d-flex justify-content-start pb-4">
+                <Tabs
+                  tabs={TAB_ITEMS}
+                  selected={tab}
+                  onChange={(tab) => {
+                    setTab(tab.id);
+                  }}
+                />
+              </div>
+              {tab === "1" ? (
+                <Loader isLoading={dataLoading} isError={isError}>
+                  <${featureName}FormikHandler
+                    pageType={pageType}
+                    initialValues={loadedValues}
+                    {...dropdownValues}
+                  />
+                </Loader>
+              ) : (
+                <Group${pluralFeatureName}FormikHandler />
+              )}
+            </>
+          )}
+        </>
+      )}
+    </Page>
+  );
+}

@@ -25,6 +25,16 @@
           "command": "api-generator.createFiles",
           "when": "explorerResourceIsFolder",
           "group": "navigation@-1"
+        },
+        {
+          "command": "api-generator.createFormsFiles",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation@-1"
+        },
+        {
+          "command": "api-generator.createGroupFormsFiles",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation@-1"
         }
       ]
     },
@@ -32,6 +42,14 @@
       {
         "command": "api-generator.createFiles",
         "title": "Generate Apis & Queries"
+      },
+      {
+        "command": "api-generator.createFormsFiles",
+        "title": "Generate registration form files"
+      },
+      {
+        "command": "api-generator.createGroupFormsFiles",
+        "title": "Generate group registration form files"
       }
     ]
   },

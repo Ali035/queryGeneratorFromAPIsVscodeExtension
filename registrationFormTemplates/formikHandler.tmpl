@@ -1,0 +1,66 @@
+import { IDropdownValues, IFormValues, validationSchema } from "./IForm";
+import { ${featureName}FormFields } from "./formFields";
+import { useFormik, FormikHelpers } from "formik";
+import { submitEntity, updateEntity } from "utils/form";
+import usePage from "hooks/usePage";
+import BasicForm from "components/common/basicForm";
+import { formikHandlerProps } from "interfaces/formik";
+import { useCreate${featureName}, useUpdate${featureName}, I${featureName}Data} from "features/${folderName}";
+
+interface IProps extends IDropdownValues, formikHandlerProps<IFormValues> {}
+
+//* this component's responsibility is to initialize the formik. And wrap your form fields inside of the `BasicForm` component.
+export const ${featureName}FormikHandler = ({ initialValues, pageType, ...props }: IProps) => {
+  const { id } = usePage();
+
+  // initializing submit and update ${featureName} mutation functions
+  const { mutate, isLoading } = useCreate${featureName}();
+  const { mutate: updateMutate, isLoading: updateIsLoading } = useUpdate${featureName}(
+    Number(id)
+  );
+
+  // formik's submit handler
+  const submitHandler = (
+    values: IFormValues,
+    actions: FormikHelpers<IFormValues>
+  ) => {
+    const valuesCopy = { ...values };
+    const ${featureName}Data :I${featureName}Data= {
+      
+    };
+    console.log("${featureName}Data: ", ${featureName}Data);
+
+    if (id) {
+      // we are in update mode
+      updateEntity(updateIsLoading, updateMutate, ${featureName}Data);
+    } else {
+      // we are in create  mode
+      submitEntity(isLoading, mutate, ${featureName}Data, actions);
+    }
+  };
+
+  //initializing formik
+  const formik = useFormik<IFormValues>({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: submitHandler,
+    validateOnChange: false,
+    validateOnBlur: false,
+  });
+
+  // the `BasicForm` component taking the block and unBlocking the form responsibility.
+  // and also have submit and cancel button inside of it.
+  return (
+    <BasicForm
+      formikSubmitHandler={formik.handleSubmit}
+      isLoading={updateIsLoading || isLoading}
+      pageType={pageType}
+    >
+      <${featureName}FormFields
+        {...props}
+        formik={formik}
+        isViewingProfile={pageType === "viewProfile"}
+      />
+    </BasicForm>
+  );
+};

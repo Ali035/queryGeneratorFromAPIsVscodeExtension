@@ -11,14 +11,18 @@ import { I${featureName}Data, I${pluralFeatureName}ListParams } from "./type";
 import useFormMutation from "hooks/useFormMutation";
 
 export const useCreate${featureName} = () => {
-  const mutationResult = useFormMutation(create${featureName}, []);
+  const mutationResult = useFormMutation(create${featureName}, [
+    //TODO: check dependencies
+  ]);
   return mutationResult;
 };
 
 export const useUpdate${featureName} = (id: number) => {
   const mutationResult = useFormMutation(
     (data: I${featureName}Data) => update${featureName}(data, id),
-    [[get${featureName}.name, id]]
+    [[get${featureName}.name, id],
+      //TODO: check dependencies
+    ]
   );
   return mutationResult;
 };

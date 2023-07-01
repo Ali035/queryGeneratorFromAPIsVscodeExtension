@@ -1,0 +1,22 @@
+import { IDropdownValues, IFormValues } from "./IForm";
+import { FormikProps } from "formik";
+import Grid from "components/core/Grid";
+
+interface IProps extends IDropdownValues {
+  formik: FormikProps<IFormValues>;
+  isViewingProfile: boolean;
+}
+//* put your form fields inside of this component.
+export function ${featureName}FormFields({
+  formik,
+  isViewingProfile,
+  ...props
+}: IProps) {
+  return (
+    <>
+      <Grid>
+        
+      </Grid>
+    </>
+  );
+}

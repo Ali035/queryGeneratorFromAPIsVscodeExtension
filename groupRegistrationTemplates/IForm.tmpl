@@ -1,0 +1,19 @@
+import { IMenuOption } from "components/core/autoComplete";
+import yup, { ShapeOf } from "utils/yupExtended";
+export * from "./formikHandler"
+
+
+export interface IFormValues {
+
+  file: File[];
+}
+
+export const initialValues: IFormValues = {
+
+  file: [],
+};
+
+export const validationSchema = yup.object<ShapeOf<IFormValues>>({
+
+  file: yup.array().min(1),
+});

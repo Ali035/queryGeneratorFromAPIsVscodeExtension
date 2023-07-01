@@ -16,8 +16,197 @@ export function activate(context: vscode.ExtensionContext) {
     "api-generator.createFiles",
     createFiles
   );
+  let disposable1 = vscode.commands.registerCommand(
+    "api-generator.createFormsFiles",
+    createFormsFiles
+  );
+  let disposable2 = vscode.commands.registerCommand(
+    "api-generator.createGroupFormsFiles",
+    createGroupFormsFiles
+  );
 
   context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable1);
+  context.subscriptions.push(disposable2);
+}
+function createFormsFiles(args: vscode.Uri) {
+  vscode.window
+    .showInputBox({
+      ignoreFocusOut: true,
+      placeHolder: "e.g. `medical device - device`",
+      title: "Please enter folder name - entity name",
+      prompt: "Your given names will change to camelCase format.",
+    })
+    .then((featureName) => {
+      if (featureName === undefined) {
+        return;
+      }
+      const splitedName = featureName.split("-");
+      const folderName = lowerCaseFirstLetter(camelCase(splitedName[0]));
+      const entityName =
+        splitedName.length === 1
+          ? capitalizeFirstLetter(folderName)
+          : capitalizeFirstLetter(camelCase(splitedName[1]));
+
+      const incomingPath = args.path;
+      const newFolderPath = incomingPath + path.sep + "registration";
+
+      if (fs.existsSync(newFolderPath)) {
+        vscode.window.showErrorMessage("Folder already exists.");
+        return;
+      }
+
+      fs.mkdirSync(newFolderPath);
+      openTemplateAndSaveNewFile(
+        "formFields",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "registrationFormTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "formikHandler",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "registrationFormTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "IForm",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "registrationFormTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "form",
+        entityName,
+        entityName,
+        newFolderPath,
+        true,
+        "registrationFormTemplates",
+        incomingPath,
+        folderName
+      );
+    });
+}
+
+function createGroupFormsFiles(args: vscode.Uri) {
+  vscode.window
+    .showInputBox({
+      ignoreFocusOut: true,
+      placeHolder: "e.g. `medical device - device - devices`",
+      title:
+        "Please enter folder name - entity name - plural form of your entity",
+      prompt: "Your given names will change to camelCase format.",
+    })
+    .then((featureName) => {
+      if (featureName === undefined) {
+        return;
+      }
+      const splitedName = featureName.split("-");
+      const folderName = lowerCaseFirstLetter(camelCase(splitedName[0]));
+      const entityName =
+        splitedName.length === 1
+          ? capitalizeFirstLetter(folderName)
+          : capitalizeFirstLetter(camelCase(splitedName[1]));
+
+      const pluralEntityName =
+        splitedName.length > 2
+          ? capitalizeFirstLetter(camelCase(splitedName[2]))
+          : entityName + "s";
+      const incomingPath = args.path;
+      let newFolderPath = incomingPath + path.sep + "groupRegistration";
+
+      if (fs.existsSync(newFolderPath)) {
+        vscode.window.showErrorMessage("Folder already exists.");
+        return;
+      }
+
+      fs.mkdirSync(newFolderPath);
+      openTemplateAndSaveNewFile(
+        "formFields",
+        entityName,
+        pluralEntityName,
+        newFolderPath,
+        false,
+        "groupRegistrationTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "formikHandler",
+        entityName,
+        pluralEntityName,
+        newFolderPath,
+        false,
+        "groupRegistrationTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "IForm",
+        entityName,
+        pluralEntityName,
+        newFolderPath,
+        false,
+        "groupRegistrationTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "form",
+        entityName,
+        pluralEntityName,
+        newFolderPath,
+        true,
+        "groupRegistrationTemplates",
+        incomingPath,
+        folderName
+      );
+
+      newFolderPath = incomingPath + path.sep + "registration";
+      fs.mkdirSync(newFolderPath);
+      openTemplateAndSaveNewFile(
+        "formFields",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "registrationFormTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "formikHandler",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "registrationFormTemplates",
+        incomingPath,
+        folderName
+      );
+      openTemplateAndSaveNewFile(
+        "IForm",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "registrationFormTemplates",
+        incomingPath,
+        folderName
+      );
+    });
 }
 
 function createFiles(args: vscode.Uri) {
@@ -57,34 +246,57 @@ function createFiles(args: vscode.Uri) {
         "type",
         entityName,
         pluralEntityName,
-        newFolderPath
+        newFolderPath,
+        false,
+        "templates",
+        incomingPath,
+        folderName
       );
       openTemplateAndSaveNewFile(
         "api",
         entityName,
         pluralEntityName,
-        newFolderPath
+        newFolderPath,
+        false,
+        "templates",
+        incomingPath,
+        folderName
       );
       openTemplateAndSaveNewFile(
         "queries",
         entityName,
         pluralEntityName,
-        newFolderPath
+        newFolderPath,
+        false,
+        "templates",
+        incomingPath,
+        folderName
       );
       openTemplateAndSaveNewFile(
         "index",
         entityName,
         pluralEntityName,
-        newFolderPath
+        newFolderPath,
+        false,
+        "templates",
+        incomingPath,
+        folderName
       );
     });
 }
 
 function openTemplateAndSaveNewFile(
-  filename: "api" | "index" | "queries" | "type",
+  filename: string,
   featureName: string,
   pluralFeatureName: string,
-  folderPath: string
+  folderPath: string,
+  outerFile: boolean,
+  templateFolderName:
+    | "templates"
+    | "registrationFormTemplates"
+    | "groupRegistrationTemplates",
+  originalPath: string,
+  folderName: string
 ) {
   const templateFileName = filename + ".tmpl";
   const extension = vscode.extensions.getExtension("AliPourpanah.api-scaffold");
@@ -92,21 +304,42 @@ function openTemplateAndSaveNewFile(
     vscode.window.showErrorMessage("Unable to found extension");
     return;
   }
-  const filePath = extension.extensionPath + "/templates/" + templateFileName;
-  if (!fs.existsSync(filePath)) {
-    vscode.window.showErrorMessage(`Unable to find file '${filePath}'`);
+  const templateFilePath =
+    extension.extensionPath +
+    path.sep +
+    templateFolderName +
+    path.sep +
+    templateFileName;
+  if (!fs.existsSync(templateFilePath)) {
+    vscode.window.showErrorMessage(`Unable to find file '${templateFilePath}'`);
     return;
   }
+  let filePath =
+    (!outerFile ? folderPath : originalPath) + path.sep + filename + ".ts";
+  if (outerFile && fs.existsSync(filePath)) {
+    filePath =
+      (!outerFile ? folderPath : originalPath) +
+      path.sep +
+      filename +
+      "(copy).ts";
+    filename = filename + "(copy)";
+  }
+  if (fs.existsSync(filePath)) {
+    vscode.window.showErrorMessage(`${filename}.ts already exists.`);
+    return;
+  }
+
   vscode.workspace
-    .openTextDocument(filePath)
+    .openTextDocument(templateFilePath)
     .then((doc: vscode.TextDocument) => {
       let text = doc.getText();
       const regex = /\${featureName}/gi;
       const pluralRegex = /\${pluralFeatureName}/gi;
+      const folderNameRegex = /\${folderName}/gi;
       text = text.replace(regex, featureName);
       text = text.replace(pluralRegex, pluralFeatureName);
-      const file = folderPath + path.sep + filename + ".ts";
-      fs.writeFileSync(file, text);
+      text = text.replace(folderNameRegex, folderName);
+      fs.writeFileSync(filePath, text);
     });
 }
 

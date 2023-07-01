@@ -1,0 +1,30 @@
+import { IFormValues } from "./IForm";
+import { FormikProps } from "formik";
+import Grid from "components/core/Grid";
+import ExcelCard from "components/common/excelCard";
+import { FastUploadInput } from "components/formikFields";
+
+type Props = { formik: FormikProps<IFormValues> };
+
+export const Group${pluralFeatureName}FormFields = ({ formik }: Props) => {
+  return (
+    <>
+      <Grid>
+        
+      </Grid>
+      <Grid.FullWidthColumn>
+        <FastUploadInput
+          formik={formik}
+          fieldName="file"
+          fileUploadCount={1}
+          type="excel"
+        />
+      </Grid.FullWidthColumn>
+      <div>
+        <ExcelCard
+          url={""}
+        />
+      </div>
+    </>
+  );
+};

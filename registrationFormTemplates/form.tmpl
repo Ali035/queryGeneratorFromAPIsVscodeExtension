@@ -1,0 +1,55 @@
+import Page from "components/layout/page";
+import { isDataIsLoading } from "utils/pages";
+import Loader from "components/common/loader";
+import usePage from "hooks/usePage";
+import { initialValues, ${featureName}FormikHandler,IDropdownValues } from "./registration/IForm";
+import useMapFormValues from "hooks/useMapFormValues";
+import { EMPTY_OPTION } from "constants/autocompleteOptions";
+import { use${featureName} } from "features/${folderName}";
+
+//* This component's responsibility is fetching data(if needed) and map the fetched data to form initial values pass to the next component props after the loaded and mapped completely so put the child component into the `Loader` component.
+export default function ${featureName}RegistrationForm() {
+  // get the 'id' and 'isViewingProfile' from the url.
+  const { id, isViewingProfile } = usePage();
+
+  //fetching the ${featureName} data
+  const { data, isError } = use${featureName}(id);
+
+  const loadedValues = useMapFormValues(initialValues, data, (dataObject) => ({
+    //* In mapping initial form values do not assign dropdown value's with fetched data.
+    //* Instead, assign it to EMPTY_OPTION and pass fetched id or name separately to formikHandler props.
+    /*    map your initial values in here      */
+
+    
+  }));
+
+  // check if you are not in create mode and the data is loaded and mapped completely.
+  const dataIsLoading = isDataIsLoading(id, loadedValues, initialValues);
+
+  // assign all your dropdowns key or values with fetched data.
+  const dataObject = data?.data.data;
+  const dropdownValues: IDropdownValues = {
+
+  };
+
+  return (
+    <Page
+      backTo="pop"
+      title="Register new ${featureName}"
+      editingTitle="Edit $name ${featureName}"
+      viewProfileTitle="View Profile of $name ${featureName}"
+      type={isViewingProfile ? "edit-inner" : "inner"}
+      name={dataObject.}
+    >
+      {(pageType) => (
+        <Loader isLoading={dataIsLoading} isError={isError}>
+          <${featureName}FormikHandler
+            pageType={pageType}
+            initialValues={loadedValues}
+            {...dropdownValues}
+          />
+        </Loader>
+      )}
+    </Page>
+  );
+}
