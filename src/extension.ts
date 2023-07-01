@@ -65,7 +65,8 @@ function createFormsFiles(args: vscode.Uri) {
         false,
         "registrationFormTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
       openTemplateAndSaveNewFile(
         "formikHandler",
@@ -75,7 +76,8 @@ function createFormsFiles(args: vscode.Uri) {
         false,
         "registrationFormTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
       openTemplateAndSaveNewFile(
         "IForm",
@@ -85,7 +87,8 @@ function createFormsFiles(args: vscode.Uri) {
         false,
         "registrationFormTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".ts"
       );
       openTemplateAndSaveNewFile(
         "form",
@@ -95,7 +98,8 @@ function createFormsFiles(args: vscode.Uri) {
         true,
         "registrationFormTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
     });
 }
@@ -141,7 +145,8 @@ function createGroupFormsFiles(args: vscode.Uri) {
         false,
         "groupRegistrationTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
       openTemplateAndSaveNewFile(
         "formikHandler",
@@ -151,7 +156,8 @@ function createGroupFormsFiles(args: vscode.Uri) {
         false,
         "groupRegistrationTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
       openTemplateAndSaveNewFile(
         "IForm",
@@ -161,7 +167,8 @@ function createGroupFormsFiles(args: vscode.Uri) {
         false,
         "groupRegistrationTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".ts"
       );
       openTemplateAndSaveNewFile(
         "form",
@@ -171,7 +178,8 @@ function createGroupFormsFiles(args: vscode.Uri) {
         true,
         "groupRegistrationTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
 
       newFolderPath = incomingPath + path.sep + "registration";
@@ -184,7 +192,8 @@ function createGroupFormsFiles(args: vscode.Uri) {
         false,
         "registrationFormTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
       openTemplateAndSaveNewFile(
         "formikHandler",
@@ -194,7 +203,8 @@ function createGroupFormsFiles(args: vscode.Uri) {
         false,
         "registrationFormTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".tsx"
       );
       openTemplateAndSaveNewFile(
         "IForm",
@@ -204,7 +214,8 @@ function createGroupFormsFiles(args: vscode.Uri) {
         false,
         "registrationFormTemplates",
         incomingPath,
-        folderName
+        folderName,
+        ".ts"
       );
     });
 }
@@ -250,7 +261,8 @@ function createFiles(args: vscode.Uri) {
         false,
         "templates",
         incomingPath,
-        folderName
+        folderName,
+        ".ts"
       );
       openTemplateAndSaveNewFile(
         "api",
@@ -260,7 +272,8 @@ function createFiles(args: vscode.Uri) {
         false,
         "templates",
         incomingPath,
-        folderName
+        folderName,
+        ".ts"
       );
       openTemplateAndSaveNewFile(
         "queries",
@@ -270,7 +283,8 @@ function createFiles(args: vscode.Uri) {
         false,
         "templates",
         incomingPath,
-        folderName
+        folderName,
+        ".ts"
       );
       openTemplateAndSaveNewFile(
         "index",
@@ -280,7 +294,8 @@ function createFiles(args: vscode.Uri) {
         false,
         "templates",
         incomingPath,
-        folderName
+        folderName,
+        ".ts"
       );
     });
 }
@@ -296,7 +311,8 @@ function openTemplateAndSaveNewFile(
     | "registrationFormTemplates"
     | "groupRegistrationTemplates",
   originalPath: string,
-  folderName: string
+  folderName: string,
+  fileExtension: ".ts" | ".tsx"
 ) {
   const templateFileName = filename + ".tmpl";
   const extension = vscode.extensions.getExtension("AliPourpanah.api-scaffold");
@@ -315,17 +331,23 @@ function openTemplateAndSaveNewFile(
     return;
   }
   let filePath =
-    (!outerFile ? folderPath : originalPath) + path.sep + filename + ".ts";
+    (!outerFile ? folderPath : originalPath) +
+    path.sep +
+    filename +
+    fileExtension;
   if (outerFile && fs.existsSync(filePath)) {
     filePath =
       (!outerFile ? folderPath : originalPath) +
       path.sep +
       filename +
-      "(copy).ts";
+      "(copy)" +
+      fileExtension;
     filename = filename + "(copy)";
   }
   if (fs.existsSync(filePath)) {
-    vscode.window.showErrorMessage(`${filename}.ts already exists.`);
+    vscode.window.showErrorMessage(
+      `${filename + fileExtension} already exists.`
+    );
     return;
   }
 

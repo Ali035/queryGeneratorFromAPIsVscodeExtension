@@ -11,3 +11,7 @@ Check [Keep a Changelog](https://keepachangelog.com/) for recommendations on how
 ## [1.1.0]
 
 - Add scaffolding registration forms (both individual and group)
+
+## [1.1.1]
+
+- Fixing file extension bug.

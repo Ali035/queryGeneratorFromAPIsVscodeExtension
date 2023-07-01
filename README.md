@@ -17,4 +17,8 @@ Initial extension.
 
 - Add scaffolding registration forms (both individual and group)
 
+## 1.1.1
+
+- Fixing file extension bug.
+
 **Enjoy!**
