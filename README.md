@@ -13,4 +13,8 @@ This extension will generate you api.ts, its type as type.ts, queries correspond
 
 Initial extension.
 
+## 1.1.0
+
+- Add scaffolding registration forms (both individual and group)
+
 **Enjoy!**
