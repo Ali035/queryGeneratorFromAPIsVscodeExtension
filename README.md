@@ -25,4 +25,8 @@ Initial extension.
 
 - Fixing formFields file importing bug and fixing isDataIsLoading state of `Loader` component.
 
+## 1.1.3
+
+- Fixing importing types bug.
+
 **Enjoy!**

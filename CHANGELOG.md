@@ -19,3 +19,7 @@ Check [Keep a Changelog](https://keepachangelog.com/) for recommendations on how
 ## [1.1.2]
 
 - Fixing formFields file importing bug and fixing isDataIsLoading state of `Loader` component.
+
+## [1.1.3]
+
+- Fixing importing types bug.
