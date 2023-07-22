@@ -9,6 +9,8 @@ import {
 } from "./api";
 import { I${featureName}Data, I${pluralFeatureName}ListParams } from "./type";
 import useFormMutation from "hooks/useFormMutation";
+import { IPagination } from "hooks/usePagination";
+import useTableQuery from "hooks/useTableQuery";
 
 export const useCreate${featureName} = () => {
   const mutationResult = useFormMutation(create${featureName}, [
@@ -45,9 +47,16 @@ export const use${pluralFeatureName}Statistics = () => {
   return queryResult;
 };
 
-export function use${pluralFeatureName}List(params: I${pluralFeatureName}ListParams) {
-  const queryResult = useQuery([get${pluralFeatureName}List.name, { ...params }], () =>
-    get${pluralFeatureName}List(params)
+export function use${pluralFeatureName}List(
+  params: I${pluralFeatureName}ListParams,
+  pagination: IPagination,
+  maxPageUpdater: (maxPage: number) => void
+) {
+  const queryResult = useTableQuery(
+    get${pluralFeatureName}List,
+    params,
+    pagination,
+    maxPageUpdater
   );
   return queryResult;
 }
