@@ -29,4 +29,8 @@ Initial extension.
 
 - Fixing importing types bug.
 
+## 1.1.4
+
+- Changing get entity list query.
+
 **Enjoy!**
