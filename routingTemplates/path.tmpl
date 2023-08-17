@@ -1,0 +1,17 @@
+import { generateSAPath } from "..";
+import { ${featureName}HomeComponent } from "./component";
+import { IDashboardRoute } from "./type";
+
+const dashboard = "dashboard";
+
+export const ${featureName}Route: I${capFeatureName}Route = {
+  ${featureName}: {
+    home: {
+      component: ${featureName}HomeComponent,
+      get() {
+        return generateSAPath(${featureName}, undefined);
+      },
+      path: ${featureName},
+    },
+  },
+};

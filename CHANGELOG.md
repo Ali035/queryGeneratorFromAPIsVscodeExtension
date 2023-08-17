@@ -27,3 +27,7 @@ Check [Keep a Changelog](https://keepachangelog.com/) for recommendations on how
 ## [1.1.4]
 
 - Changing get entity list query.
+
+## [1.1.5]
+
+- Generating route files.

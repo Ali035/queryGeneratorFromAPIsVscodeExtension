@@ -7,6 +7,19 @@ All the functions that you need to create,update,delete and get an entity.
 
 This extension will generate you api.ts, its type as type.ts, queries corresponding with APIs as queries.ts and index.ts to export all of them.
 
+## Publishing Extensions
+
+`vsce`, short for "Visual Studio Code Extensions", is a command-line tool for packaging, publishing and managing VS Code extensions.
+
+### Installation
+
+Make sure you have Node.js installed. Then run:
+`npm install -g @vscode/vsce`
+
+### packaging
+
+`$ vsce publish`
+
 ## Release Notes
 
 ### 1.0.0
@@ -32,5 +45,9 @@ Initial extension.
 ## 1.1.4
 
 - Changing get entity list query.
+
+## 1.1.5
+
+- Generating route files.
 
 **Enjoy!**

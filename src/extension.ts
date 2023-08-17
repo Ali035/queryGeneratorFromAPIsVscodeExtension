@@ -24,11 +24,96 @@ export function activate(context: vscode.ExtensionContext) {
     "api-generator.createGroupFormsFiles",
     createGroupFormsFiles
   );
+  let disposable3 = vscode.commands.registerCommand(
+    "api-generator.createRoutes",
+    createRoute
+  );
 
   context.subscriptions.push(disposable);
   context.subscriptions.push(disposable1);
   context.subscriptions.push(disposable2);
+  context.subscriptions.push(disposable3);
 }
+
+function createRoute(args: vscode.Uri) {
+  vscode.window
+    .showInputBox({
+      ignoreFocusOut: true,
+      placeHolder: "e.g. `medical device - device`",
+      title: "Please enter folder name - entity name ",
+      prompt: "Your given names will change to camelCase format.",
+    })
+    .then((featureName) => {
+      if (featureName === undefined) {
+        return;
+      }
+      const splitedName = featureName.split("-");
+      const folderName = lowerCaseFirstLetter(camelCase(splitedName[0]));
+      const entityName =
+        splitedName.length === 1
+          ? lowerCaseFirstLetter(folderName)
+          : lowerCaseFirstLetter(camelCase(splitedName[1]));
+
+      const incomingPath = args.path;
+      const newFolderPath = incomingPath + path.sep + folderName;
+
+      if (fs.existsSync(newFolderPath)) {
+        vscode.window.showErrorMessage("Folder already exists.");
+        return;
+      }
+
+      fs.mkdirSync(newFolderPath);
+      openTemplateAndSaveNewFile(
+        "component",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "routingTemplates",
+        incomingPath,
+        folderName,
+        ".ts",
+        capitalizeFirstLetter(entityName)
+      );
+      openTemplateAndSaveNewFile(
+        "type",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "routingTemplates",
+        incomingPath,
+        folderName,
+        ".ts",
+        capitalizeFirstLetter(entityName)
+      );
+      openTemplateAndSaveNewFile(
+        "path",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "routingTemplates",
+        incomingPath,
+        folderName,
+        ".ts",
+        capitalizeFirstLetter(entityName)
+      );
+      openTemplateAndSaveNewFile(
+        "index",
+        entityName,
+        entityName,
+        newFolderPath,
+        false,
+        "routingTemplates",
+        incomingPath,
+        folderName,
+        ".ts",
+        capitalizeFirstLetter(entityName)
+      );
+    });
+}
+
 function createFormsFiles(args: vscode.Uri) {
   vscode.window
     .showInputBox({
@@ -309,10 +394,12 @@ function openTemplateAndSaveNewFile(
   templateFolderName:
     | "templates"
     | "registrationFormTemplates"
-    | "groupRegistrationTemplates",
+    | "groupRegistrationTemplates"
+    | "routingTemplates",
   originalPath: string,
   folderName: string,
-  fileExtension: ".ts" | ".tsx"
+  fileExtension: ".ts" | ".tsx",
+  capitalizeFeatureName?: string
 ) {
   const templateFileName = filename + ".tmpl";
   const extension = vscode.extensions.getExtension("AliPourpanah.api-scaffold");
@@ -358,9 +445,13 @@ function openTemplateAndSaveNewFile(
       const regex = /\${featureName}/gi;
       const pluralRegex = /\${pluralFeatureName}/gi;
       const folderNameRegex = /\${folderName}/gi;
+      const capFeatureNameNameRegex = /\${capFeatureName}/gi;
       text = text.replace(regex, featureName);
       text = text.replace(pluralRegex, pluralFeatureName);
       text = text.replace(folderNameRegex, folderName);
+      if (capitalizeFeatureName) {
+        text = text.replace(capFeatureNameNameRegex, capitalizeFeatureName);
+      }
       fs.writeFileSync(filePath, text);
     });
 }

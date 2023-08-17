@@ -1,0 +1,6 @@
+import { lazy } from "react";
+import { lazyRetry } from "utils/route";
+
+export const ${featureName}HomeComponent = lazy(() =>
+  lazyRetry(() => import()) //TODO: add component path
+);
